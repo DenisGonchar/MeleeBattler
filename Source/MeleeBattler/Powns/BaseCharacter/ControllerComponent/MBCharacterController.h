@@ -29,6 +29,8 @@ private:
 
 	void Jump();
 
+	void Attack();
+	
 	TSoftObjectPtr<class AMBBaseCharacter> CachedBaseCharacter;
 
 };

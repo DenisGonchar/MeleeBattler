@@ -1,6 +1,8 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "MBBaseCharacter.h"
+
+#include "AbilitySystemComponent.h"
 #include "HeadMountedDisplayFunctionLibrary.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -16,7 +18,7 @@ AMBBaseCharacter::AMBBaseCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer.SetDefaultSubobjectClass<UMBCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 
 {
-	BaseCharecterMovementComponent = StaticCast<UMBCharacterMovementComponent*>(GetCharacterMovement());
+	BaseCharacterMovementComponent = StaticCast<UMBCharacterMovementComponent*>(GetCharacterMovement());
 
 	//PrimaryActorTick.bCanEverTick = true;
 
@@ -32,10 +34,10 @@ AMBBaseCharacter::AMBBaseCharacter(const FObjectInitializer& ObjectInitializer)
 	GetCharacterMovement()->RotationRate = FRotator(0.0f, 540.0f, 0.0f);
 	GetCharacterMovement()->JumpZVelocity = 700;
 
+	//Components
 	CharacterEquipComponent = CreateDefaultSubobject<UMBEquipComponent>(TEXT("EquipComponent"));
-
 	CharacterComboAttackComponent = CreateDefaultSubobject<UMBComboAttackComponent>(TEXT("ComboAttackComponent"));
-
+	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
 }
 
 void AMBBaseCharacter::BeginPlay()
@@ -90,5 +92,27 @@ bool AMBBaseCharacter::CanJumpInternal_Implementation() const
 void AMBBaseCharacter::OnJumped_Implementation()
 {
 	Super::OnJumped_Implementation();
+}
+
+void AMBBaseCharacter::UseAbility(TSubclassOf<UGameplayAbility> Ability)
+{
+	if (Ability != nullptr)
+	{
+		AbilitySystemComponent->TryActivateAbilityByClass(Ability);
+		
+	}
+}
+
+void AMBBaseCharacter::Attack()
+{
+	if(CanAttack())
+	{
+		CharacterComboAttackComponent->Attack();
+	}
+}
+
+bool AMBBaseCharacter::CanAttack() const
+{
+	return CharacterEquipComponent->GetActiveItem() != nullptr;
 }
 

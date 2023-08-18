@@ -6,20 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "MBItem.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class MELEEBATTLER_API AMBItem : public AActor
 {
 	GENERATED_BODY()
-
-public:
-	// Sets default values for this actor's properties
-	AMBItem();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+		
 };

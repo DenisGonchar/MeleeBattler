@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -7,20 +5,32 @@
 #include "GameFramework/Actor.h"
 #include "MBMeleeItem.generated.h"
 
-UCLASS()
+class USkeletalMeshComponent;
+class UMBComboAttackData;
+
+UCLASS(Abstract)
 class MELEEBATTLER_API AMBMeleeItem : public AMBItem
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this actor's properties
 	AMBMeleeItem();
 
-protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
 public:
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combo Attack")
+	UMBComboAttackData* ComboAttackData;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Equip")
+	FName AttachSosketName;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	USceneComponent* TransformComponent;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	USkeletalMeshComponent* MeshComponent;
+
+	
 };

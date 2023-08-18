@@ -3,34 +3,55 @@
 
 #include "MBEquipComponent.h"
 
+#include "GameFramework/Character.h"
+#include "Items/MBMeleeItem.h"
 
-// Sets default values for this component's properties
 UMBEquipComponent::UMBEquipComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
-
-// Called when the game starts
 void UMBEquipComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
 }
 
-
-// Called every frame
 void UMBEquipComponent::TickComponent(float DeltaTime, ELevelTick TickType,
                                       FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+}
+
+void UMBEquipComponent::EquipItemClassToHand(TSubclassOf<AMBMeleeItem> NewItem)
+{
+	if (NewItem != nullptr)
+	{
+		FActorSpawnParameters spawnParameters;
+		spawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		
+		const auto itemInstance = GetWorld()->SpawnActor<AMBMeleeItem>(NewItem, spawnParameters);
+
+		EquipItemToHand(itemInstance);
+	}
+}
+
+void UMBEquipComponent::EquipItemToHand(AMBMeleeItem* NewItem)
+{
+	if (NewItem != nullptr)
+	{
+		if (ActiveItem != nullptr)
+		{
+			ActiveItem->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+			ActiveItem->Destroy();
+		}
+		
+		ActiveItem = NewItem;
+		const auto meshComponent = GetOwner<ACharacter>()->GetMesh();
+		ActiveItem->AttachToComponent(meshComponent, FAttachmentTransformRules::SnapToTargetIncludingScale, HandItemAttachSocketName);
+		
+	}
 }
 

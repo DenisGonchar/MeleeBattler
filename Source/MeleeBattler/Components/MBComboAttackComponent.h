@@ -7,20 +7,32 @@
 #include "MBComboAttackComponent.generated.h"
 
 
+class UMBEquipComponent;
+class AMBBaseCharacter;
+class AMBMeleeItem;
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class MELEEBATTLER_API UMBComboAttackComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this component's properties
 	UMBComboAttackComponent();
 
-protected:
-	// Called when the game starts
+public:
 	virtual void BeginPlay() override;
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+	void Attack();
 
 public:
-	// Called every frame
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+	
+protected:
+
+private:
+	AMBMeleeItem* GetActiveItem() const;
+	
+	TWeakObjectPtr<AMBBaseCharacter> OwningCharacter;
+	TWeakObjectPtr<UMBEquipComponent> EquipComponent;
+	
 };

@@ -3,34 +3,56 @@
 
 #include "MBComboAttackComponent.h"
 
+#include "MBEquipComponent.h"
+#include "Data/MBComboAttackData.h"
+#include "Items/MBMeleeItem.h"
+#include "Powns/BaseCharacter/MBBaseCharacter.h"
 
-// Sets default values for this component's properties
+
 UMBComboAttackComponent::UMBComboAttackComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
-
-
-// Called when the game starts
 void UMBComboAttackComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
+	OwningCharacter = GetOwner<AMBBaseCharacter>();
+	if (OwningCharacter.IsValid())
+	{
+		EquipComponent = OwningCharacter->GetEquipComponent();
+	}
 	
 }
 
-
-// Called every frame
 void UMBComboAttackComponent::TickComponent(float DeltaTime, ELevelTick TickType,
                                             FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+}
+
+void UMBComboAttackComponent::Attack()
+{
+	const auto activeItem = GetActiveItem();
+	if ( !OwningCharacter.IsValid() || activeItem == nullptr || activeItem->ComboAttackData == nullptr || activeItem->ComboAttackData->ComboAbilities.Num() == 0)
+	{
+		return;
+	}
+
+	const auto comboAttackData = activeItem->ComboAttackData;
+	OwningCharacter->UseAbility(comboAttackData->ComboAbilities[0]);
+		
+}
+
+AMBMeleeItem* UMBComboAttackComponent::GetActiveItem() const
+{
+	if (EquipComponent.IsValid())
+	{
+		return EquipComponent->GetActiveItem();
+	}
+	
+	return  nullptr;
 }
 
