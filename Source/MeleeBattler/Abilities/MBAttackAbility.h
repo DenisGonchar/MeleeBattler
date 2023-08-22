@@ -7,7 +7,6 @@
 class UMBComboAttackComponent;
 class AMBBaseCharacter;
 
-
 UCLASS()
 class UMBAttackAbility : public UGameplayAbility
 {

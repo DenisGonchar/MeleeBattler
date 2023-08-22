@@ -51,7 +51,9 @@ void UMBEquipComponent::EquipItemToHand(AMBMeleeItem* NewItem)
 		ActiveItem = NewItem;
 		const auto meshComponent = GetOwner<ACharacter>()->GetMesh();
 		ActiveItem->AttachToComponent(meshComponent, FAttachmentTransformRules::SnapToTargetIncludingScale, HandItemAttachSocketName);
-		
+
+		//TODO remove abilityon unequip item
+		ActiveItem->GrantAbilitiesToActor(GetOwner());
 	}
 }
 

@@ -15,6 +15,7 @@
 #include "MovementComponent/MBCharacterMovementComponent.h"
 #include "Abilities/MBAttackAbility.h"
 #include "Abilities/GameplayAbility.h"
+#include "Abilities/MBCharacterAttributeSet.h"
 
 AMBBaseCharacter::AMBBaseCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer.SetDefaultSubobjectClass<UMBCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -37,6 +38,7 @@ AMBBaseCharacter::AMBBaseCharacter(const FObjectInitializer& ObjectInitializer)
 	GetCharacterMovement()->JumpZVelocity = 700;
 
 	//Components
+	CharacterAttributeSet = CreateDefaultSubobject<UMBCharacterAttributeSet>("CharacterAttributeSet");
 	CharacterEquipComponent = CreateDefaultSubobject<UMBEquipComponent>(TEXT("EquipComponent"));
 	CharacterComboAttackComponent = CreateDefaultSubobject<UMBComboAttackComponent>(TEXT("ComboAttackComponent"));
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
@@ -114,8 +116,8 @@ void AMBBaseCharacter::StopAttack()
 {
 	if (const auto abilitySpec = AbilitySystemComponent->FindAbilitySpecFromClass(AttackAbility))
 	{
-		AbilitySystemComponent->ReplicateEndOrCancelAbility(abilitySpec->Handle, abilitySpec->ActivationInfo, abilitySpec->Ability, false);
-		
+		//AbilitySystemComponent->ReplicateEndOrCancelAbility(abilitySpec->Handle, abilitySpec->ActivationInfo, abilitySpec->Ability, false);
+		AbilitySystemComponent->CancelAbility(abilitySpec->Ability);
 	}	
 }
 

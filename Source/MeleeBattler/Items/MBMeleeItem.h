@@ -18,7 +18,7 @@ public:
 
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
-
+	virtual void GrantAbilitiesToActor(AActor* Actor) override;
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combo Attack")
 	UMBComboAttackData* ComboAttackData;

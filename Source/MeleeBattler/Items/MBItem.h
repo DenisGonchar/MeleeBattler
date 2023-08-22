@@ -10,5 +10,7 @@ UCLASS(Abstract)
 class MELEEBATTLER_API AMBItem : public AActor
 {
 	GENERATED_BODY()
-		
+
+public:
+	virtual  void GrantAbilitiesToActor(AActor* Actor);
 };

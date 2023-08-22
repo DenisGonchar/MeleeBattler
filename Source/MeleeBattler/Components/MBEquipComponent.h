@@ -33,6 +33,7 @@ public:
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FName HandItemAttachSocketName;
+
 	
 private:
 	UPROPERTY()

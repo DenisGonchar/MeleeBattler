@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 #include "MBBaseCharacter.generated.h"
 
@@ -11,10 +12,10 @@ class UMBCharacterMovementComponent;
 class UMBComboAttackComponent;
 class UMBEquipComponent;
 class UMBAttackAbility;
-
+class UMBCharacterAttributeSet;
 
 UCLASS(config=Game)
-class AMBBaseCharacter : public ACharacter
+class AMBBaseCharacter : public ACharacter, public IAbilitySystemInterface
 {
 
 	GENERATED_BODY()
@@ -28,6 +29,8 @@ class AMBBaseCharacter : public ACharacter
 public:
 	AMBBaseCharacter(const FObjectInitializer& ObjectInitializer);
 
+	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override { return AbilitySystemComponent; };
+	
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 
@@ -64,7 +67,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UAbilitySystemComponent* AbilitySystemComponent;
-	
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UMBCharacterAttributeSet* CharacterAttributeSet;
 protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

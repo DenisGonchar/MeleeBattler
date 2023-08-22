@@ -4,11 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Abilities/GameplayAbility.h"
 #include "MBComboAttackComponent.generated.h"
 
 
-//class UGameplayAbility;
+class UGameplayAbility;
 class UMBEquipComponent;
 class AMBBaseCharacter;
 class AMBMeleeItem;
