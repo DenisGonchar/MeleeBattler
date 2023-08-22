@@ -21,7 +21,8 @@ void AMBCharacterController::SetupInputComponent()
 	InputComponent->BindAxis("LookUp", this, &AMBCharacterController::LookUp);
 
 	InputComponent->BindAction("Jump", EInputEvent::IE_Pressed, this, &AMBCharacterController::Jump);
-	InputComponent->BindAction("Attack", EInputEvent::IE_Pressed, this, &AMBCharacterController::Attack);
+	InputComponent->BindAction("Attack", EInputEvent::IE_Pressed, this, &AMBCharacterController::StartAttack);
+	InputComponent->BindAction("Attack", EInputEvent::IE_Released, this, &AMBCharacterController::StopAttack);
 
 	
 }
@@ -70,10 +71,18 @@ void AMBCharacterController::Jump()
 	}
 }
 
-void AMBCharacterController::Attack()
+void AMBCharacterController::StartAttack()
 {
 	if (CachedBaseCharacter.IsValid())
 	{
-		CachedBaseCharacter->Attack();
+		CachedBaseCharacter->StartAttack();
+	}
+}
+
+void AMBCharacterController::StopAttack()
+{
+	if (CachedBaseCharacter.IsValid())
+	{
+		CachedBaseCharacter->StopAttack();
 	}
 }

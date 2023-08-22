@@ -10,6 +10,8 @@ class UAbilitySystemComponent;
 class UMBCharacterMovementComponent;
 class UMBComboAttackComponent;
 class UMBEquipComponent;
+class UMBAttackAbility;
+
 
 UCLASS(config=Game)
 class AMBBaseCharacter : public ACharacter
@@ -43,12 +45,18 @@ public:
 	
 	//Attack
 	UFUNCTION(BlueprintCallable)
-	void Attack();
+	void StartAttack();
+
+	UFUNCTION(BlueprintCallable)
+	void StopAttack();
 	
 	UFUNCTION(BlueprintPure)
 	bool CanAttack() const;
 	
 public:
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UMBAttackAbility> AttackAbility;
+
 	
 	UMBEquipComponent* GetEquipComponent() const { return  CharacterEquipComponent; };
 	UMBComboAttackComponent* GetComboAttackComponent() const { return CharacterComboAttackComponent; };

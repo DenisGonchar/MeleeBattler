@@ -13,6 +13,8 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "MovementComponent/MBCharacterMovementComponent.h"
+#include "Abilities/MBAttackAbility.h"
+#include "Abilities/GameplayAbility.h"
 
 AMBBaseCharacter::AMBBaseCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer.SetDefaultSubobjectClass<UMBCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -103,12 +105,18 @@ void AMBBaseCharacter::UseAbility(TSubclassOf<UGameplayAbility> Ability)
 	}
 }
 
-void AMBBaseCharacter::Attack()
+void AMBBaseCharacter::StartAttack()
 {
-	if(CanAttack())
+	UseAbility(AttackAbility);
+}
+
+void AMBBaseCharacter::StopAttack()
+{
+	if (const auto abilitySpec = AbilitySystemComponent->FindAbilitySpecFromClass(AttackAbility))
 	{
-		CharacterComboAttackComponent->Attack();
-	}
+		AbilitySystemComponent->ReplicateEndOrCancelAbility(abilitySpec->Handle, abilitySpec->ActivationInfo, abilitySpec->Ability, false);
+		
+	}	
 }
 
 bool AMBBaseCharacter::CanAttack() const

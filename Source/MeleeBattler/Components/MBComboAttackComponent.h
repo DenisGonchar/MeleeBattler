@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Abilities/GameplayAbility.h"
 #include "MBComboAttackComponent.generated.h"
 
 
+//class UGameplayAbility;
 class UMBEquipComponent;
 class AMBBaseCharacter;
 class AMBMeleeItem;
@@ -23,9 +25,9 @@ public:
 	virtual void BeginPlay() override;
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	void Attack();
-
-public:
+	void NextAttackAbility();
+	void ResetCombo();
+	TSubclassOf<UGameplayAbility>GetNextComboAbility() const;
 	
 protected:
 
@@ -34,5 +36,7 @@ private:
 	
 	TWeakObjectPtr<AMBBaseCharacter> OwningCharacter;
 	TWeakObjectPtr<UMBEquipComponent> EquipComponent;
-	
+
+	TWeakObjectPtr<AMBMeleeItem> LastAbilityItem;
+	int32 LastComboAttackAbilityIndex;
 };

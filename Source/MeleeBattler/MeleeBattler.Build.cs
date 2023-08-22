@@ -8,7 +8,7 @@ public class MeleeBattler : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay","GameplayTags", "GameplayAbilities" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "HeadMountedDisplay","GameplayTags", "GameplayAbilities","GameplayTasks" });
 		
         PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
         
