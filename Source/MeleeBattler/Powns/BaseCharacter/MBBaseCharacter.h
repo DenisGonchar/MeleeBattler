@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "MBBaseCharacter.generated.h"
 
+class UMBCharacterTargetingComponent;
 class UAbilitySystemComponent;
 class UMBCharacterMovementComponent;
 class UMBComboAttackComponent;
@@ -59,10 +60,11 @@ public:
 public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UMBAttackAbility> AttackAbility;
-
 	
 	UMBEquipComponent* GetEquipComponent() const { return  CharacterEquipComponent; };
 	UMBComboAttackComponent* GetComboAttackComponent() const { return CharacterComboAttackComponent; };
+	UMBCharacterTargetingComponent* GetTargetingComponent() const { return TargetingComponent; };
+	
 	FORCEINLINE UMBCharacterMovementComponent* GetBaseCharacterMovementComponent() const { return BaseCharacterMovementComponent;}
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
@@ -76,7 +78,9 @@ protected:
 	UMBEquipComponent* CharacterEquipComponent;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	UMBComboAttackComponent* CharacterComboAttackComponent;
-
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	UMBCharacterTargetingComponent* TargetingComponent;
+	
 	UMBCharacterMovementComponent* BaseCharacterMovementComponent;
 
 };

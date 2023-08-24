@@ -16,6 +16,7 @@
 #include "Abilities/MBAttackAbility.h"
 #include "Abilities/GameplayAbility.h"
 #include "Abilities/MBCharacterAttributeSet.h"
+#include "Components/MBCharacterTargetingComponent.h"
 
 AMBBaseCharacter::AMBBaseCharacter(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer.SetDefaultSubobjectClass<UMBCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
@@ -42,6 +43,7 @@ AMBBaseCharacter::AMBBaseCharacter(const FObjectInitializer& ObjectInitializer)
 	CharacterEquipComponent = CreateDefaultSubobject<UMBEquipComponent>(TEXT("EquipComponent"));
 	CharacterComboAttackComponent = CreateDefaultSubobject<UMBComboAttackComponent>(TEXT("ComboAttackComponent"));
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	TargetingComponent = CreateDefaultSubobject<UMBCharacterTargetingComponent>("TargetingComponent");
 }
 
 void AMBBaseCharacter::BeginPlay()
