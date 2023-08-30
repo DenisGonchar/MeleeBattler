@@ -12,7 +12,8 @@
 UMBCharacterTargetingComponent::UMBCharacterTargetingComponent()
 {
 	PrimaryComponentTick.bCanEverTick = true;
-
+	PrimaryComponentTick.bStartWithTickEnabled = true;
+	
 }
 
 
@@ -42,12 +43,10 @@ AActor* UMBCharacterTargetingComponent::GetTarget() const
 	const FVector traceStart = GetOwner()->GetActorLocation();
 	const FVector traceEnd = traceStart * FVector::OneVector;
 
-	EDrawDebugTrace::Type drowDebug = BIsEnableDebug ? EDrawDebugTrace::ForOneFrame : EDrawDebugTrace::None;
-	
 	TArray<AActor*> ignoreActors = {GetOwner()};
 	TArray<FHitResult> hitResults;
 	
-	UKismetSystemLibrary::SphereTraceMulti(this, traceStart, traceEnd, MaxTargetRadius, TraceType, false, ignoreActors,  drowDebug, hitResults, true);
+	UKismetSystemLibrary::SphereTraceMulti(this, traceStart, traceEnd, MaxTargetRadius, TraceType, false, ignoreActors,  EDrawDebugTrace::None, hitResults, true);
 
 	TArray<AActor*> potentialTargets;
 	for (const auto& hitResult : hitResults)
@@ -66,13 +65,13 @@ AActor* UMBCharacterTargetingComponent::GetTarget() const
 	{
 		if (targetFactor != nullptr)
 		{
-			potentialTargets = targetFactor->GetHighPriorityActors(potentialTargets);
+			potentialTargets = targetFactor->GetHighPriorityActors(potentialTargets, BIsEnableDebug, MaxTargetRadius);
 		}
 	}
 	
 	if (potentialTargets.Num() != 0)
 	{
-		
+	
 		return potentialTargets[0];
 	}
 	
@@ -85,7 +84,11 @@ void UMBCharacterTargetingComponent::DrawDebug()
 {
 	if (const auto target = GetTarget())
 	{
-		DrawDebugLine(GetWorld(),GetOwner()->GetActorLocation(), target->GetActorLocation(), FColor::Green,false);
+		DrawDebugCircle(GetWorld(), GetOwner()->GetActorLocation(), MaxTargetRadius, 32, FColor::Green, false,
+					-1, 0, 2.0f, FVector(0.f, 1.f, 0.f), FVector(1.f, 0.f, 0.f));
+		
+		DrawDebugLine(GetWorld(),GetOwner()->GetActorLocation(), target->GetActorLocation(), FColor::Blue,false);
+
 		
 	}
 	

@@ -3,12 +3,9 @@
 
 #include "MBTargetFactor.h"
 
-float UMBTargetFactor::GetPriority_Implementation(AActor* TestActor) const
-{
-	return 0.f;
-}
 
-TArray<AActor*> UMBTargetFactor::GetHighPriorityActors_Implementation(const TArray<AActor*>& TestActors) const
+TArray<AActor*> UMBTargetFactor::GetHighPriorityActors_Implementation(const TArray<AActor*>& TestActors, bool bEnableDebug/*= false*/
+                                                                      , float TargetRadius/* = 300.0f*/) const
 {
 	return {};
 }

@@ -11,10 +11,8 @@ class  UMBTargetFactor : public UObject
 {
 	GENERATED_BODY()
 public:
-	UFUNCTION(BlueprintNativeEvent)
-	float GetPriority(AActor* TestActor) const;
 	
 	UFUNCTION(BlueprintNativeEvent)
-	TArray<AActor*> GetHighPriorityActors(const TArray<AActor*>& TestActors ) const;
+	TArray<AActor*> GetHighPriorityActors(const TArray<AActor*>& TestActors, bool bEnableDebug = false, float TargetRadius = 300.0f) const;
 	
 };

@@ -24,7 +24,7 @@ public:
 	ATTRIBUTE_ACCESSORS(UMBCharacterAttributeSet, Health);
 
 	UPROPERTY(BlueprintReadOnly, Category= "Damage")
-	FGameplayAttributeData MaxHealth;
+	FGameplayAttributeData MaxHealth; 
 	ATTRIBUTE_ACCESSORS(UMBCharacterAttributeSet, MaxHealth);
 	
 

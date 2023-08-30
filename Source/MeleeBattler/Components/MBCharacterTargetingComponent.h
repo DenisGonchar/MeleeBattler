@@ -30,10 +30,7 @@ protected:
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	float MaxTargetRadius = 300.0f;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	TEnumAsByte<ECollisionChannel> TraceChannel = ECollisionChannel::ECC_Pawn;
-
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TEnumAsByte<ETraceTypeQuery> TraceType;
 	
